@@ -33,6 +33,12 @@ export default class App extends Component {
         </button>
         {showModal && (
           <Modal onClose={this.toggleModal}>
+            <p>
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+              Excepturi repudiandae fugit officiis distinctio facilis molestias
+              ipsam beatae explicabo eligendi ipsa dignissimos nisi hic nemo,
+              atque saepe incidunt corrupti dolorem dolorum!
+            </p>
             <img src="" alt="" />
             <button type="button" onClick={this.toggleModal}>
               close
