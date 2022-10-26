@@ -23,7 +23,15 @@ class ImageGallery extends Component {
     return (
       <ul className={css.gallery}>
         {this.state.image &&
-          Object.values(this.state.image)[2].map(el => console.log(el))}
+          Object.values(this.state.image)[2].map(
+            ({ id, webformatURL, tags }) => (
+              <ImageGalleryItem
+                id={id}
+                webformatURL={webformatURL}
+                tags={tags}
+              />
+            )
+          )}
       </ul>
     );
   }
