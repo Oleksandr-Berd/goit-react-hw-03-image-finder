@@ -1,4 +1,6 @@
 import ImageGalleryItem from 'components/ImageGalleryItem/ImageGalleryItem';
+import { Dna } from 'react-loader-spinner';
+
 import { Component } from 'react';
 import css from './ImageGallery.module.css';
 import { url } from 'components/Constant/Url';
@@ -8,6 +10,7 @@ class ImageGallery extends Component {
   state = {
     image: null,
     loading: false,
+    error: null,
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -20,6 +23,7 @@ class ImageGallery extends Component {
         )
           .then(res => res.json())
           .then(image => this.setState({ image }))
+          .catch(error => this.setState({ error }))
           .finally(this.setState({ loading: false }));
       }, 3000);
     }
@@ -31,7 +35,16 @@ class ImageGallery extends Component {
 
     return (
       <ul className={css.gallery}>
-        {loading && <div style={{ backgroundColor: 'colar' }}>Loading...</div>}
+        {loading && (
+          <Dna
+            visible={true}
+            height="80"
+            width="80"
+            ariaLabel="dna-loading"
+            wrapperStyle={{}}
+            wrapperClass="dna-wrapper"
+          />
+        )}
         {!imageName && <div>Enter some data</div>}
         {image &&
           Object.values(image)[2].map(
