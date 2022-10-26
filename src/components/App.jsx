@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import css from '../components/App.module.css';
 import Searchbar from './Searchbar/Searchbar';
+import ImageGallery from './ImageGallery/ImageGallery';
+// import { ToastContainer } from 'react-toastify';
 import Modal from './Modal/Modal';
 
 export default class App extends Component {
   state = {
     showModal: false,
+    imageName: '',
   };
 
   componentDidMount() {}
@@ -18,19 +21,36 @@ export default class App extends Component {
     }));
   };
 
+  handleFormSubmit = imageName => {
+    this.setState({ imageName });
+  };
+
   render() {
     const { showModal } = this.state;
 
     return (
       <div className={css.app}>
-        <Searchbar />
-        <button
+        <Searchbar submit={this.handleFormSubmit} />
+        {/* <button
           type="buttom"
           onClick={this.toggleModal}
           className={css.open__modal}
         >
           open modal
-        </button>
+        </button> */}
+        <ImageGallery imageName={this.state.imageName} />
+        {/* <ToastContainer
+          autoClose={3000}
+          position="top-center"
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="dark"
+        /> */}
         {showModal && (
           <Modal onClose={this.toggleModal}>
             <p>
