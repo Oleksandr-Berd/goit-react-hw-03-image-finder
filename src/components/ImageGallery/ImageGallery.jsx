@@ -14,22 +14,27 @@ class ImageGallery extends Component {
     if (prevProps.imageName !== this.props.imageName) {
       this.setState({ loading: true });
 
-      fetch(
-        `${url}?q=${this.props.imageName}&page=1&key=${key}&image_type=photo&orientation=horizontal&per_page=12`
-      )
-        .then(res => res.json())
-        .then(image => this.setState({ image }))
-        .finally(this.setState({ loading: false }));
+      setTimeout(() => {
+        fetch(
+          `${url}?q=${this.props.imageName}&page=1&key=${key}&image_type=photo&orientation=horizontal&per_page=12`
+        )
+          .then(res => res.json())
+          .then(image => this.setState({ image }))
+          .finally(this.setState({ loading: false }));
+      }, 3000);
     }
   }
 
   render() {
+    const { loading, image } = this.state;
+    const { imageName } = this.props;
+
     return (
       <ul className={css.gallery}>
-        {this.state.loading && <div>Loading...</div>}
-        {!this.props.imageName && <div>Enter some data</div>}
-        {this.state.image &&
-          Object.values(this.state.image)[2].map(
+        {loading && <div style={{ backgroundColor: 'colar' }}>Loading...</div>}
+        {!imageName && <div>Enter some data</div>}
+        {image &&
+          Object.values(image)[2].map(
             ({ id, webformatURL, tags, largeImageURL }) => (
               <ImageGalleryItem
                 id={id}
