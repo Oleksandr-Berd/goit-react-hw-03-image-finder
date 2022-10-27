@@ -35,13 +35,6 @@ export default class Modal extends Component {
             alt={this.props.alt}
           />
           <p>{this.props.alt}</p>
-          <button
-            className={css.btn__close}
-            type="button"
-            onClick={this.toggleModal}
-          >
-            close
-          </button>
         </div>
       </div>,
       modalRoot
