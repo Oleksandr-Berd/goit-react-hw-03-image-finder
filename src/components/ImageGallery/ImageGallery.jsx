@@ -15,7 +15,7 @@ class ImageGallery extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.imageName !== this.props.imageName) {
-      this.setState({ loading: true });
+      this.setState({ loading: true, image: null });
 
       setTimeout(() => {
         fetch(
@@ -25,16 +25,17 @@ class ImageGallery extends Component {
           .then(image => this.setState({ image }))
           .catch(error => this.setState({ error }))
           .finally(this.setState({ loading: false }));
-      }, 3000);
+      }, 1000);
     }
   }
 
   render() {
-    const { loading, image } = this.state;
+    const { loading, image, error } = this.state;
     const { imageName } = this.props;
 
     return (
       <ul className={css.gallery}>
+        {error && <p>There is no such data:{imageName}</p>}
         {loading && (
           <Dna
             visible={true}
