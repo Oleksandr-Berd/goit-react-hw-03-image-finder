@@ -8,15 +8,28 @@
   justify-content: center;
   align-items: center;
   background-color: rgba(0, 0, 0, 0.8);
-  /* z-index: 1200; */
+  z-index: 1200;
 }
 
 .modal {
-  display: block;
-  width: 500px;
+  /* display: block; */
+  /* width: auto; */
   position: absolute;
   max-width: calc(100vw - 48px);
   max-height: calc(100vh - 24px);
   color: white;
-  background-color: coral;
+  font-weight: bold;
+  background-color: black;
+  text-align: center;
+  padding-bottom: 10px;
+}
+
+.image__modal {
+  width: auto;
+  height: auto;
+}
+
+.btn__close {
+  border-radius: 14px;
+  font-weight: bold;
 }
