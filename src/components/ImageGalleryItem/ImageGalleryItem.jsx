@@ -18,7 +18,6 @@ export default class ImageGalleryItem extends Component {
     return (
       <li
         className={css.gallery__item}
-        key={this.props.id}
         onClick={this.toggleModal}
         largeimageurl={this.props.largeImageURL}
       >

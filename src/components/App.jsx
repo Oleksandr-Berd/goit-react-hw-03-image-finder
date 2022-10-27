@@ -9,10 +9,6 @@ export default class App extends Component {
     imageName: '',
   };
 
-  componentDidMount() {}
-
-  componentDidUpdate() {}
-
   handleFormSubmit = imageName => {
     this.setState({ imageName });
   };

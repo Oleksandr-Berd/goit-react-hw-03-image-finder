@@ -1,5 +1,6 @@
 import ImageGalleryItem from 'components/ImageGalleryItem/ImageGalleryItem';
 import { Dna } from 'react-loader-spinner';
+import Button from 'components/Button/Button';
 
 import { Component } from 'react';
 import css from './ImageGallery.module.css';
@@ -11,15 +12,25 @@ class ImageGallery extends Component {
     image: null,
     loading: false,
     error: null,
+    page: 1,
+  };
+
+  loadMore = () => {
+    this.setState(prevState => ({
+      page: prevState.page + 1,
+    }));
   };
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.imageName !== this.props.imageName) {
+    if (
+      prevProps.imageName !== this.props.imageName ||
+      prevState.page !== this.state.page
+    ) {
       this.setState({ loading: true, image: null });
 
       setTimeout(() => {
         fetch(
-          `${url}?q=${this.props.imageName}&page=1&key=${key}&image_type=photo&orientation=horizontal&per_page=12`
+          `${url}?q=${this.props.imageName}&page=${this.state.page}&key=${key}&image_type=photo&orientation=horizontal&per_page=12`
         )
           .then(res => res.json())
           .then(image => this.setState({ image }))
@@ -27,6 +38,8 @@ class ImageGallery extends Component {
           .finally(this.setState({ loading: false }));
       }, 1000);
     }
+    console.log(prevState.page);
+    console.log(this.state.page);
   }
 
   render() {
@@ -51,13 +64,14 @@ class ImageGallery extends Component {
           Object.values(image)[2].map(
             ({ id, webformatURL, tags, largeImageURL }) => (
               <ImageGalleryItem
-                id={id}
+                key={id}
                 webformatURL={webformatURL}
                 tags={tags}
                 largeImageURL={largeImageURL}
               />
             )
           )}
+        {image && <Button loadMore={this.loadMore} />}
       </ul>
     );
   }
