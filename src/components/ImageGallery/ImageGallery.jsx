@@ -23,21 +23,30 @@ class ImageGallery extends Component {
 
   async componentDidUpdate(prevProps, prevState) {
     if (
-      prevProps.imageName !== this.props.imageName ||
+      // prevProps.imageName !== this.props.imageName ||
       prevState.page !== this.state.page
     ) {
       this.setState({ loading: true });
       const response = await axios.get(
         `${url}?q=${this.props.imageName}&page=${this.state.page}&key=${key}&image_type=photo&orientation=horizontal&per_page=12`
       );
-      console.log(response.data.hits);
+
       this.setState(prevState => ({
         image: [...prevState.image, ...response.data.hits],
         loading: false,
       }));
     }
-    console.log(prevState.image);
-    console.log(this.state.image);
+    if (prevProps.imageName !== this.props.imageName) {
+      this.setState({ loading: true });
+      const response = await axios.get(
+        `${url}?q=${this.props.imageName}&page=${this.state.page}&key=${key}&image_type=photo&orientation=horizontal&per_page=12`
+      );
+
+      this.setState({
+        image: [...response.data.hits],
+        loading: false,
+      });
+    }
   }
 
   render() {
