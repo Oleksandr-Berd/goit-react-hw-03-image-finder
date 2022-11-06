@@ -45,8 +45,10 @@ class ImageGallery extends Component {
       this.setState({
         image: [...response.data.hits],
         loading: false,
+        page: 1,
       });
     }
+    console.log(this.state.page);
   }
 
   render() {
