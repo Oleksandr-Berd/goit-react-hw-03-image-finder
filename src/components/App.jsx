@@ -5,13 +5,14 @@ import ImageGallery from './ImageGallery/ImageGallery';
 import { url } from 'components/Constant/Url';
 import { key } from 'components/Constant/Key';
 import axios from 'axios';
-// import { ToastContainer } from 'react-toastify';
 
 export default class App extends Component {
   state = {
     imageName: '',
     page: 1,
     image: [],
+    loading: false,
+    error: null,
   };
 
   handleFormSubmit = imageName => {
@@ -54,27 +55,19 @@ export default class App extends Component {
   }
 
   render() {
+    const { loading, error, imageName, image, page } = this.state;
+
     return (
       <div className={css.app}>
         <Searchbar submit={this.handleFormSubmit} />
         <ImageGallery
-          imageName={this.state.imageName}
+          imageName={imageName}
           loadMore={this.loadMore}
-          page={this.state.page}
-          image={this.state.image}
+          page={page}
+          image={image}
+          loading={loading}
+          error={error}
         />
-        {/* <ToastContainer
-          autoClose={3000}
-          position="top-center"
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="dark"
-        /> */}
       </div>
     );
   }
