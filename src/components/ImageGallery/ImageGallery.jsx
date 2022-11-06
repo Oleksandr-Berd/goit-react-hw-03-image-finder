@@ -9,51 +9,13 @@ import { key } from 'components/Constant/Key';
 
 class ImageGallery extends Component {
   state = {
-    image: [],
     loading: false,
     error: null,
-    page: 1,
   };
-
-  loadMore = () => {
-    this.setState(prevState => ({
-      page: prevState.page + 1,
-    }));
-  };
-
-  async componentDidUpdate(prevProps, prevState) {
-    if (
-      // prevProps.imageName !== this.props.imageName ||
-      prevState.page !== this.state.page
-    ) {
-      this.setState({ loading: true });
-      const response = await axios.get(
-        `${url}?q=${this.props.imageName}&page=${this.state.page}&key=${key}&image_type=photo&orientation=horizontal&per_page=12`
-      );
-
-      this.setState(prevState => ({
-        image: [...prevState.image, ...response.data.hits],
-        loading: false,
-      }));
-    }
-    if (prevProps.imageName !== this.props.imageName) {
-      this.setState({ loading: true });
-      const response = await axios.get(
-        `${url}?q=${this.props.imageName}&page=${this.state.page}&key=${key}&image_type=photo&orientation=horizontal&per_page=12`
-      );
-
-      this.setState({
-        image: [...response.data.hits],
-        loading: false,
-        page: 1,
-      });
-    }
-    console.log(this.state.page);
-  }
 
   render() {
-    const { loading, image, error } = this.state;
-    const { imageName } = this.props;
+    const { loading, error } = this.state;
+    const { imageName, image } = this.props;
 
     return (
       <ul className={css.gallery}>
@@ -79,7 +41,7 @@ class ImageGallery extends Component {
               />
             ))
           : null}
-        {image.length > 0 && <Button loadMore={this.loadMore} />}
+        {image.length > 0 && <Button loadMore={this.props.loadMore} />}
       </ul>
     );
   }
